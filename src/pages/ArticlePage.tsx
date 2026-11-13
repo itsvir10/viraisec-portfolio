@@ -45,9 +45,9 @@ export default function ArticlePage() {
     };
   }, []);
   useEffect(() => {
-    if (article) document.title = `${article.title} | Virdhawal Jadhav`;
+    if (article) document.title = `${article.title} | Vir`;
     return () => {
-      document.title = 'Virdhawal Jadhav | Cyber Security and AI';
+      document.title = 'Vir';
     };
   }, [article]);
 

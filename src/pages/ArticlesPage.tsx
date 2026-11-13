@@ -15,10 +15,10 @@ export default function ArticlesPage() {
 
   useEffect(() => {
     store.page = 'article';
-    document.title = 'Articles | Virdhawal Jadhav';
+    document.title = 'Articles | Vir';
     return () => {
       store.page = 'home';
-      document.title = 'Virdhawal Jadhav | Cyber Security and AI';
+      document.title = 'Vir';
     };
   }, []);
 
