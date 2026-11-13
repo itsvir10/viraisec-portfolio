@@ -113,7 +113,16 @@ function run(cmd: string): Line[] {
         out(articles.length ? 'Type "read <slug>" to open one. Tab completes the name.' : 'Nothing published yet.'),
       ];
     case 'certs':
-      return certs.map((c) => out(`${c.title} (${c.issuer}, ${c.detail})`));
+      return certs.flatMap((c) => [
+        out(
+          <>
+            <span className="text-white">{c.title}</span>
+            <span className="text-slate-500"> ({c.issuer}, {c.detail})</span>
+          </>,
+        ),
+        out(<span className="text-slate-400">{`  ${c.about}`}</span>),
+        ...c.outcomes.map((o) => out(<span className="text-slate-400">{`  - ${o}`}</span>)),
+      ]);
     case 'contact':
       return [out(<>email: {ext(`mailto:${profile.email}`, profile.email)}</>), out('Fastest way to get a reply.')];
     case 'socials':
