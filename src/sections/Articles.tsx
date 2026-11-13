@@ -16,7 +16,8 @@ export default function Articles() {
   const reduced = useMedia('(prefers-reduced-motion: reduce)');
   const wide = useMedia('(min-width: 1024px)');
   const pinned = wide && !reduced;
-  const latest = articles.slice(0, 5);
+  const latest = articles.slice(0, 2);
+  const more = articles.length - latest.length;
 
   const section = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
@@ -84,7 +85,7 @@ export default function Articles() {
             </div>
           )}
           <Link to="/articles" className="glass mt-10 inline-flex rounded-full px-6 py-3 font-display text-base text-white transition-colors duration-500 hover:border-neon/50">
-            View all articles
+            {more > 0 ? `See all ${articles.length} articles` : 'See all articles'}
           </Link>
         </div>
       </section>
@@ -110,8 +111,10 @@ export default function Articles() {
             data-cursor="all"
             className="glass flex w-[min(30vw,380px)] shrink-0 flex-col justify-end rounded-[1.75rem] p-8 transition-colors duration-500 hover:border-neon/50"
           >
-            <span className="font-display text-3xl font-medium tracking-tight text-white">View all articles</span>
-            <span className="mt-2 text-slate-400">Filter by security or AI.</span>
+            <span className="font-display text-3xl font-medium tracking-tight text-white">See all articles</span>
+            <span className="mt-2 text-slate-400">
+              {more > 0 ? `${more} more, ` : ''}filter by security or AI.
+            </span>
           </Link>
         </div>
       </div>
