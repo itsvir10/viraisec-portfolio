@@ -2,6 +2,7 @@ import { profile } from '../data/content';
 import { Magnetic, RevealText, icons } from '../components/ui';
 import { toast } from '../lib/toast';
 import { store } from '../lib/store';
+import { useTeam } from '../lib/team';
 
 async function copyEmail() {
   store.fx.burst = performance.now();
@@ -14,11 +15,13 @@ async function copyEmail() {
 }
 
 export default function Contact() {
+  const team = useTeam();
   return (
     <section id="contact" className="relative flex min-h-screen flex-col px-6 pt-28 md:px-12 lg:px-20">
       <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center text-center">
         <RevealText
-          text="Got a system to protect or an agent to build?"
+          key={team}
+          text={team === 'attack' ? 'Got a system you want broken? Legally.' : 'Got a system to protect or an agent to build?'}
           className="mx-auto max-w-5xl font-display text-[clamp(2.4rem,6.4vw,6rem)] font-medium leading-[0.95] tracking-[-0.04em] text-white [text-shadow:0_2px_40px_rgba(5,6,10,0.7)]"
         />
         <p className="mt-7 max-w-md text-lg text-slate-300">Internships, projects, or a good argument about threat models and agent design. My inbox is open.</p>
@@ -39,7 +42,7 @@ export default function Contact() {
           <Magnetic>
             <a
               href={`mailto:${profile.email}`}
-              className="bg-gradient-accent flex items-center gap-2.5 rounded-full px-7 py-3.5 font-display text-base font-medium text-ink transition-shadow duration-500 hover:shadow-[0_0_40px_-4px_rgba(0,229,255,0.7)]"
+              className="bg-gradient-accent flex items-center gap-2.5 rounded-full px-7 py-3.5 font-display text-base font-medium text-ink transition-shadow duration-500 hover:shadow-[0_0_40px_-4px_color-mix(in_srgb,var(--color-neon)_70%,transparent)]"
             >
               {icons.mail}
               Send an email
@@ -59,7 +62,7 @@ export default function Contact() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={`${s.name}: ${s.label}`}
-                  className="glass flex items-center gap-3 rounded-full px-5 py-3 text-sm text-slate-200 transition-all duration-500 hover:border-neon/50 hover:text-white hover:shadow-[0_0_30px_-6px_rgba(0,229,255,0.6)]"
+                  className="glass flex items-center gap-3 rounded-full px-5 py-3 text-sm text-slate-200 transition-all duration-500 hover:border-neon/50 hover:text-white hover:shadow-[0_0_30px_-6px_color-mix(in_srgb,var(--color-neon)_60%,transparent)]"
                 >
                   {s.icon}
                   <span className="hidden sm:inline">{s.label}</span>

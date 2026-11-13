@@ -27,7 +27,7 @@ export default function Skills() {
                 className={`glass rounded-[1.75rem] p-7 md:p-9 ${security ? '!border-neon/25' : '!border-ultra/40'}`}
               >
                 <div className="flex items-center gap-3">
-                  <span className={`h-2.5 w-2.5 rounded-full ${security ? 'bg-neon shadow-[0_0_14px_2px_rgba(0,229,255,0.7)]' : 'bg-[#a98bff] shadow-[0_0_14px_2px_rgba(124,58,237,0.9)]'}`} />
+                  <span className={`h-2.5 w-2.5 rounded-full ${security ? 'bg-neon shadow-[0_0_14px_2px_color-mix(in_srgb,var(--color-neon)_70%,transparent)]' : 'bg-ultra-soft shadow-[0_0_14px_2px_color-mix(in_srgb,var(--color-ultra)_90%,transparent)]'}`} />
                   <h3 className="font-display text-3xl font-medium tracking-tight text-white md:text-4xl">{group.title}</h3>
                 </div>
                 <p className="mt-2 text-slate-400">{group.note}</p>
@@ -38,7 +38,7 @@ export default function Skills() {
                       custom={i}
                       variants={item}
                       className={`rounded-full border bg-white/[0.04] px-3.5 py-1.5 text-sm text-slate-100 transition-colors duration-300 ${
-                        security ? 'border-neon/20 hover:border-neon/70' : 'border-ultra/40 hover:border-[#a98bff]'
+                        security ? 'border-neon/20 hover:border-neon/70' : 'border-ultra/40 hover:border-ultra-soft'
                       }`}
                     >
                       {skill}

@@ -81,7 +81,7 @@ export default function Hero({ ready }: { ready: boolean }) {
               <button
                 type="button"
                 onClick={() => scrollToId('articles')}
-                className="bg-gradient-accent rounded-full px-7 py-3.5 font-display text-base font-medium text-ink transition-shadow duration-500 hover:shadow-[0_0_40px_-4px_rgba(0,229,255,0.7)]"
+                className="bg-gradient-accent rounded-full px-7 py-3.5 font-display text-base font-medium text-ink transition-shadow duration-500 hover:shadow-[0_0_40px_-4px_color-mix(in_srgb,var(--color-neon)_70%,transparent)]"
               >
                 Read the articles
               </button>
