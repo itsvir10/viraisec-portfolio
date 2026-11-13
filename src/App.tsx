@@ -12,6 +12,7 @@ import Cursor from './components/Cursor';
 import Navbar from './components/Navbar';
 import { ProgressRail, Toaster } from './components/Chrome';
 import Home from './pages/Home';
+import EasterEggs from './components/EasterEggs';
 
 // Heavy parts load separately: the 3D scene and the article pages.
 const loadScene = () => import('./components/three/Scene');
@@ -175,6 +176,7 @@ export default function App() {
           )}
         </AnimatePresence>
 
+        {mode === 'gui' && <EasterEggs ready={revealed && !booting} />}
         <Toaster />
       </Router>
     </MotionConfig>
