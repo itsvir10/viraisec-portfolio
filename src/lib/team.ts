@@ -3,8 +3,8 @@ import { store } from './store';
 import { toast } from './toast';
 
 /**
- * Attack / defend toggle. Defend is the normal blue-team look; attack swaps
- * the whole palette to red-team red and orange (CSS variables on <html>,
+ * Attack / defend toggle. Attack (red team: red and orange) is the default;
+ * defend swaps the whole palette to the blue-team cyan and violet (CSS variables on <html>,
  * plus the 3D scene, which eases toward store.team).
  */
 export type Team = 'defend' | 'attack';
@@ -13,9 +13,9 @@ const listeners = new Set<() => void>();
 
 function read(): Team {
   try {
-    return localStorage.getItem(KEY) === 'attack' ? 'attack' : 'defend';
+    return localStorage.getItem(KEY) === 'defend' ? 'defend' : 'attack';
   } catch {
-    return 'defend';
+    return 'attack';
   }
 }
 
@@ -51,6 +51,6 @@ export function useTeam(): Team {
       return () => listeners.delete(l);
     },
     () => current,
-    () => 'defend',
+    () => 'attack',
   );
 }
