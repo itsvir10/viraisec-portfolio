@@ -34,8 +34,8 @@ export const KF_KEYS: (keyof KF)[] = ['x', 'y', 'z', 'scale', 'spin', 'split', '
 export const KEYFRAMES: Record<string, KF> = {
   hero: { x: 0.23, y: 0.09, z: 0, scale: 1.25, spin: 0, split: 0, sep: 0, spread: 0, pulse: 1, dim: 1, floor: 1 },
   about: { x: 0.25, y: 0, z: -0.5, scale: 0.95, spin: 1.2, split: 1, sep: 0.125, spread: 0, pulse: 1, dim: 1, floor: 0.45 },
-  skills: { x: 0, y: 0.02, z: -2.5, scale: 1.1, spin: 2.4, split: 1, sep: 0.29, spread: 0, pulse: 1.2, dim: 0.6, floor: 0.25 },
-  articles: { x: 0, y: 0, z: -4.5, scale: 1.05, spin: 3.6, split: 0, sep: 0, spread: 0, pulse: 2.6, dim: 0.75, floor: 0.3 },
+  skills: { x: 0.3, y: 0.27, z: -0.5, scale: 0.55, spin: 2.4, split: 0, sep: 0, spread: 0, pulse: 1.2, dim: 0.85, floor: 0.3 },
+  articles: { x: -0.28, y: -0.34, z: -1, scale: 0.6, spin: 3.6, split: 0, sep: 0, spread: 0, pulse: 2, dim: 0.8, floor: 0.35 },
   certs: { x: 0.36, y: -0.2, z: -1, scale: 0.65, spin: 5, split: 0, sep: 0, spread: 0, pulse: 1, dim: 0.9, floor: 0.5 },
   terminal: { x: -0.34, y: 0.03, z: -1, scale: 0.8, spin: 6.2, split: 0, sep: 0, spread: 0.6, pulse: 1.2, dim: 0.9, floor: 0.35 },
   contact: { x: 0, y: 0.04, z: -2, scale: 1.3, spin: 7.6, split: 0, sep: 0, spread: 0, pulse: 3.2, dim: 0.55, floor: 0.9 },
@@ -56,7 +56,7 @@ function mix(out: KF, a: KF, b: KF, t: number) {
 }
 
 /** Sections the camera flies into through the tunnel. */
-const FLY_INTO = new Set(['articles', 'terminal', 'contact']);
+const FLY_INTO = new Set<string>(); // fly-through tunnel turned off: the one globe glides between sections instead
 
 /**
  * Shared, per-frame state of the scene. The Director (Scene.tsx) updates it

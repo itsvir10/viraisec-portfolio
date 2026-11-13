@@ -8,7 +8,6 @@ import { KF_KEYS, KEYFRAMES, getSampledFly, live, sampleKeyframes, type KF } fro
 import { Graph } from './Graph';
 import { CursorNode } from './CursorNode';
 import { Stars } from './Stars';
-import { Tunnel } from './Tunnel';
 import { Horizon } from './Horizon';
 
 type Props = { mobile: boolean; reduced: boolean; finePointer: boolean; featureFields: number[] };
@@ -116,7 +115,7 @@ export default function Scene({ mobile, reduced, finePointer, featureFields }: P
         <Stars count={mobile ? 700 : 2600} reduced={reduced} />
         <Horizon />
         <Graph nodes={mobile ? 60 : 170} pulses={mobile ? 16 : 48} reduced={reduced} featureFields={featureFields} />
-        {!reduced && <Tunnel />}
+        {/* tunnel removed */}
         {!mobile && <Bokeh count={22} />}
         {finePointer && !reduced && <CursorNode />}
 
