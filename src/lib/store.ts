@@ -24,4 +24,16 @@ export const store = {
   hover: { x: 0, y: 0, index: -1, field: 0 },
   /** True while an article node's card is open, so the graph holds still under it. */
   hold: false,
+  /** Easter-egg effects on the graph, as performance.now() start times (0 = never). */
+  fx: { burst: 0 },
 };
+
+/** 0..1 envelope for an effect that started at `start`: quick rise, hold, soft fall. */
+export function fxAmount(start: number, hold: number, now = performance.now()) {
+  if (!start) return 0;
+  const t = (now - start) / 1000;
+  if (t < 0) return 0;
+  if (t < 0.25) return t / 0.25;
+  if (t < hold) return 1;
+  return Math.max(0, 1 - (t - hold) / 0.8);
+}
