@@ -2,6 +2,10 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { store } from '../../lib/store';
+import { fieldColor } from './keyframes';
+
+const ca = [0, 0, 0];
+const cb = [0, 0, 0];
 
 const DEPTH = 2;
 const LINKS = 7; // how many stars it connects to at once
@@ -34,6 +38,9 @@ export function CursorNode() {
     n.position.lerp(goal, 1 - Math.exp(-Math.min(delta, 0.05) * 6));
     n.scale.setScalar(1 + 0.2 * Math.sin(state.clock.elapsedTime * 3));
     n.visible = store.mouse.active;
+    fieldColor(0, ca);
+    fieldColor(1, cb);
+    color.setRGB(0.6 + ca[0] * 2.2, 0.15 + ca[1] * 2.5, 0.2 + ca[2] * 2.6);
 
     const pos = geo.attributes.position.array as Float32Array;
     const col = geo.attributes.color.array as Float32Array;
@@ -79,12 +86,12 @@ export function CursorNode() {
         pos[k6 + 4] = b.y;
         pos[k6 + 5] = b.z;
         // cyan at the cursor, violet at the star
-        col[k6] = 0;
-        col[k6 + 1] = 0.9 * a;
-        col[k6 + 2] = 1.0 * a;
-        col[k6 + 3] = 0.62 * a;
-        col[k6 + 4] = 0.32 * a;
-        col[k6 + 5] = 1.0 * a;
+        col[k6] = ca[0] * a;
+        col[k6 + 1] = ca[1] * a;
+        col[k6 + 2] = ca[2] * a;
+        col[k6 + 3] = cb[0] * a;
+        col[k6 + 4] = cb[1] * a;
+        col[k6 + 5] = cb[2] * a;
       }
     }
     geo.attributes.position.needsUpdate = true;

@@ -8,7 +8,7 @@ import { KF_KEYS, KEYFRAMES, getSampledFly, live, sampleKeyframes, type KF } fro
 import { Graph } from './Graph';
 import { CursorNode } from './CursorNode';
 import { Stars } from './Stars';
-import { Horizon } from './Horizon';
+import { Horizon, recolor } from './Horizon';
 
 type Props = { mobile: boolean; reduced: boolean; finePointer: boolean; featureFields: number[] };
 
@@ -27,6 +27,8 @@ function Director({ reduced }: { reduced: boolean }) {
     const k = 1 - Math.exp(-dt * 3.2);
     for (const key of KF_KEYS) live.kf[key] += (tg[key] - live.kf[key]) * k;
     const flyTarget = reduced ? 0 : getSampledFly();
+    // attack / defend palette eases over about a second
+    live.team += (store.team - live.team) * (reduced ? 1 : 1 - Math.exp(-dt * 3.5));
     live.fly += (flyTarget - live.fly) * (1 - Math.exp(-dt * 7));
 
     // camera: widen the lens, push in and roll slightly while flying
@@ -60,23 +62,30 @@ function Bokeh({ count }: { count: number }) {
     ctx.fillRect(0, 0, size, size);
     return new THREE.CanvasTexture(canvas);
   }, []);
-  const [positions, colors] = useMemo(() => {
+  const painted = useRef(0);
+  const [positions, colors, mix] = useMemo(() => {
     const p = new Float32Array(count * 3);
     const c = new Float32Array(count * 3);
+    const mx = new Float32Array(count * 2);
     for (let i = 0; i < count; i++) {
       const x = (Math.random() - 0.5) * 9;
       p.set([x, (Math.random() - 0.5) * 6 - 0.8, 3 + Math.random() * 3], i * 3);
       const m = Math.min(1, Math.max(0, x / 5 + 0.5));
       const b = 0.05 + Math.random() * 0.07;
       c.set([0.62 * m * b, (0.9 - 0.58 * m) * b, b], i * 3);
+      mx.set([m, b], i * 2);
     }
-    return [p, c];
+    return [p, c, mx];
   }, [count]);
   useFrame(() => {
     const p = ref.current;
     p.position.y = Math.sin(window.scrollY * 0.0016) * 1.4; // sways with the scroll, faster than the stars
     p.position.x += (-store.mouse.x * 0.4 - p.position.x) * 0.05;
     (p.material as THREE.PointsMaterial).opacity = 1 - live.fly;
+    if (Math.abs(live.team - painted.current) > 0.002) {
+      painted.current = live.team;
+      recolor(p.geometry.attributes.color as THREE.BufferAttribute, mix);
+    }
   });
   return (
     <points ref={ref} frustumCulled={false}>

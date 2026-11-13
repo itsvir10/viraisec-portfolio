@@ -64,7 +64,27 @@ const FLY_INTO = new Set<string>(); // fly-through tunnel turned off: the one gl
  *  kf   the eased pose
  *  fly  0..1, peaks in the middle of a fly-through transition
  */
-export const live = { kf: { ...KEYFRAMES.hero, scale: 0.01 } as KF, fly: 0 };
+export const live = { kf: { ...KEYFRAMES.hero, scale: 0.01 } as KF, fly: 0, team: 0 };
+
+/** The two field colours for each team: index 0 = network side, 1 = neural side. */
+const DEFEND = [
+  [0.0, 0.9, 1.0],
+  [0.62, 0.32, 1.0],
+];
+const ATTACK = [
+  [1.0, 0.06, 0.16],
+  [1.0, 0.32, 0.02],
+];
+/** Writes the current (eased) colour of one field into `out`. */
+export function fieldColor(field: number, out: number[]) {
+  const k = live.team;
+  const a = DEFEND[field];
+  const b = ATTACK[field];
+  out[0] = a[0] + (b[0] - a[0]) * k;
+  out[1] = a[1] + (b[1] - a[1]) * k;
+  out[2] = a[2] + (b[2] - a[2]) * k;
+  return out;
+}
 
 let sampledFly = 0;
 export const getSampledFly = () => sampledFly;

@@ -2,12 +2,17 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { fxAmount, store } from '../../lib/store';
-import { live } from './keyframes';
+import { fieldColor, live } from './keyframes';
 
 const RADIUS = 1.45;
 // HDR colours (values above 1) so bloom picks them up. Cyan = security, violet = AI.
+// field colours; refreshed every frame so the attack / defend toggle can recolour them
 const CYAN = [0.0, 0.9, 1.0];
 const VIOLET = [0.62, 0.32, 1.0];
+const RING_A = new THREE.Color('#00E5FF');
+const RING_B = new THREE.Color('#7C3AED');
+const RING_A_ATTACK = new THREE.Color('#ff2a4a');
+const RING_B_ATTACK = new THREE.Color('#ff6a10');
 
 // Small seeded RNG so the graph is identical on every visit.
 function rng(seed: number) {
@@ -280,6 +285,8 @@ export function Graph({
     const introPulses = Math.min(1, Math.max(0, (intro - 0.8) / 0.2));
     // the graph fades out while the camera is inside the tunnel
     const dim = c.dim * (1 - fly) * (1 - fly);
+    fieldColor(0, CYAN);
+    fieldColor(1, VIOLET);
     // easter egg: a pulse burst when the email is copied
     const now = performance.now();
     const burst = reduced ? 0 : fxAmount(store.fx.burst, 1.2, now);
@@ -503,6 +510,9 @@ export function Graph({
     ringB.current.rotation.set(Math.PI / 2 - 0.5, -t * 0.1, 0.6);
     (ringA.current.material as THREE.MeshBasicMaterial).opacity = 0.5 * ringOpacity;
     (ringB.current.material as THREE.MeshBasicMaterial).opacity = 0.35 * ringOpacity;
+    // rings follow the attack / defend palette too
+    (ringA.current.material as THREE.MeshBasicMaterial).color.lerpColors(RING_A, RING_A_ATTACK, live.team);
+    (ringB.current.material as THREE.MeshBasicMaterial).color.lerpColors(RING_B, RING_B_ATTACK, live.team);
   });
 
   return (
