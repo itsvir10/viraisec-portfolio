@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { store } from '../../lib/store';
+import { fxAmount, store } from '../../lib/store';
 import { live } from './keyframes';
 
 const RADIUS = 1.45;
@@ -280,6 +280,9 @@ export function Graph({
     const introPulses = Math.min(1, Math.max(0, (intro - 0.8) / 0.2));
     // the graph fades out while the camera is inside the tunnel
     const dim = c.dim * (1 - fly) * (1 - fly);
+    // easter egg: a pulse burst when the email is copied
+    const now = performance.now();
+    const burst = reduced ? 0 : fxAmount(store.fx.burst, 1.2, now);
 
     // ---- place the whole graph and lean it toward the mouse
     const grp = group.current;
@@ -379,7 +382,7 @@ export function Graph({
 
       const col = g.field[i] === 0 ? CYAN : VIOLET;
       const feature = slot >= 0 ? 1.5 + 0.35 * Math.sin(t * 2.2 + g.phase[i]) : 1;
-      const bright = dim * (0.35 + 0.65 * arrive) * (g.field[i] === 0 ? 1.25 : 1.05) * (1 + heat[i] * 2.2) * feature;
+      const bright = dim * (0.35 + 0.65 * arrive) * (g.field[i] === 0 ? 1.25 : 1.05) * (1 + heat[i] * 2.2) * feature * (1 + burst * 0.7);
       const alert = i === alertIdx ? flare : 0;
       tmp.s.setScalar(g.size[i] * (1 + heat[i] * 1.3) * (1 + alert * 1.6));
       tmp.m.compose(tmp.v.set(px, py, pz), tmp.q, tmp.s);
@@ -454,7 +457,7 @@ export function Graph({
         pu.to = g.edges[e * 2 + 1];
         pu.t = Math.random();
       }
-      if (!reduced) pu.t += dt * pu.speed * c.pulse * 1.3;
+      if (!reduced) pu.t += dt * pu.speed * c.pulse * 1.3 * (1 + burst * 3);
       if (pu.t >= 1) {
         // passing through a node flips the signal to the other field's colour
         pu.field = g.field[pu.to] === 0 ? 1 : 0;
@@ -486,7 +489,7 @@ export function Graph({
       pulsePos[p3 + 1] = pos[f3 + 1] + (pos[t3 + 1] - pos[f3 + 1]) * pu.t;
       pulsePos[p3 + 2] = pos[f3 + 2] + (pos[t3 + 2] - pos[f3 + 2]) * pu.t;
       const col = pu.field === 0 ? CYAN : VIOLET;
-      const bright = (pu.edge >= g.countA ? s : 1 - s) * dim * introPulses * (2.6 + 0.5 * c.pulse);
+      const bright = (pu.edge >= g.countA ? s : 1 - s) * dim * introPulses * (2.6 + 0.5 * c.pulse) * (1 + burst * 0.8);
       pulseCol[p3] = (col[0] * 0.75 + 0.25) * bright;
       pulseCol[p3 + 1] = (col[1] * 0.75 + 0.25) * bright;
       pulseCol[p3 + 2] = (col[2] * 0.75 + 0.25) * bright;
