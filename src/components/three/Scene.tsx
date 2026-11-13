@@ -21,13 +21,18 @@ const lens = new THREE.Vector2(0.0006, 0.0006);
  */
 function Director({ reduced }: { reduced: boolean }) {
   const target = useRef<KF>({ ...KEYFRAMES.hero });
+  const first = useRef(true);
   useFrame((state, delta) => {
     const dt = Math.min(delta, 0.05);
     const tg = sampleKeyframes(target.current);
     const k = 1 - Math.exp(-dt * 3.2);
     for (const key of KF_KEYS) live.kf[key] += (tg[key] - live.kf[key]) * k;
     const flyTarget = reduced ? 0 : getSampledFly();
-    // attack / defend palette eases over about a second
+    // attack / defend palette eases over about a second (but starts on the saved team)
+    if (first.current) {
+      first.current = false;
+      live.team = store.team;
+    }
     live.team += (store.team - live.team) * (reduced ? 1 : 1 - Math.exp(-dt * 3.5));
     live.fly += (flyTarget - live.fly) * (1 - Math.exp(-dt * 7));
 
