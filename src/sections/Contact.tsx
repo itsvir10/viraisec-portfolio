@@ -1,11 +1,13 @@
 import { profile } from '../data/content';
 import { Magnetic, RevealText, icons } from '../components/ui';
 import { toast } from '../lib/toast';
+import { store } from '../lib/store';
 
 async function copyEmail() {
+  store.fx.burst = performance.now();
   try {
     await navigator.clipboard.writeText(profile.email);
-    toast('Email copied');
+    toast('Payload delivered 📨 Email copied');
   } catch {
     toast(`Copy blocked here. It is ${profile.email}`);
   }
