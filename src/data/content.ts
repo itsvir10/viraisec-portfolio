@@ -84,10 +84,57 @@ export const skillsFoundations: { title: string; items: string[] }[] = [
 ];
 
 // Oldest first, so the timeline reads left to right in the order they were earned.
-export const certs = [
-  { title: 'CS50', issuer: 'Harvard University', detail: 'Introduction to Computer Science' },
-  { title: 'AWS Academy Cloud Foundations', issuer: 'AWS Academy', detail: 'Graduate, May 2026' },
-  { title: 'CompTIA Security+', issuer: 'CompTIA', detail: 'SY0-701' },
+// Each one opens a pop-up with a short summary and what it covers.
+export type Cert = {
+  title: string;
+  issuer: string;
+  detail: string;
+  field: Field | 'both';
+  about: string;
+  outcomes: string[];
+};
+
+export const certs: Cert[] = [
+  {
+    title: 'CS50',
+    issuer: 'Harvard University',
+    detail: 'Introduction to Computer Science',
+    field: 'both',
+    about: "Harvard's introduction to computer science: programming from the ground up, starting in C and moving to Python, SQL and the web.",
+    outcomes: [
+      'Programming in C, including memory, pointers and how programs run underneath',
+      'Algorithms and data structures: searching, sorting, linked lists, hash tables',
+      'Python and SQL for scripting and working with data',
+      'Building web apps with HTML, CSS, JavaScript and Flask',
+    ],
+  },
+  {
+    title: 'AWS Academy Cloud Foundations',
+    issuer: 'AWS Academy (Amazon Web Services)',
+    detail: 'Graduate, May 2026',
+    field: 'both',
+    about: 'An introduction to cloud computing on AWS: what the cloud is, the core services, and how they are secured and paid for.',
+    outcomes: [
+      'Core services: compute (EC2), storage (S3), networking (VPC) and databases',
+      'Identity and access management, and the shared responsibility model',
+      'Designing for reliability with load balancing and auto scaling',
+      'How cloud pricing and billing work',
+    ],
+  },
+  {
+    title: 'CompTIA Security+',
+    issuer: 'CompTIA',
+    detail: 'SY0-701',
+    field: 'security',
+    about: 'An industry-recognised certification covering the core knowledge for an entry-level security role.',
+    outcomes: [
+      'Core security concepts, including cryptography and identity and access management',
+      'Threats, vulnerabilities and how to mitigate them',
+      'Secure architecture for networks, systems and the cloud',
+      'Security operations: monitoring, incident response and forensics',
+      'Governance, risk management and compliance',
+    ],
+  },
 ];
 
 export const sections = [
