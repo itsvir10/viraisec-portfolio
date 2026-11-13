@@ -26,6 +26,8 @@ export const store = {
   hold: false,
   /** Easter-egg effects on the graph, as performance.now() start times (0 = never). */
   fx: { burst: 0 },
+  /** Attack / defend toggle target: 0 = defend (cyan, violet), 1 = attack (red, orange). */
+  team: 0,
 };
 
 /** 0..1 envelope for an effect that started at `start`: quick rise, hold, soft fall. */
