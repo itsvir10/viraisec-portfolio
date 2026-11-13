@@ -122,6 +122,7 @@ function run(cmd: string): Line[] {
         ),
         out(<span className="text-slate-400">{`  ${c.about}`}</span>),
         ...c.outcomes.map((o) => out(<span className="text-slate-400">{`  - ${o}`}</span>)),
+        out(<>{'  '}verify: {ext(c.link, c.linkLabel.toLowerCase())}</>),
       ]);
     case 'contact':
       return [out(<>email: {ext(`mailto:${profile.email}`, profile.email)}</>), out('Fastest way to get a reply.')];
