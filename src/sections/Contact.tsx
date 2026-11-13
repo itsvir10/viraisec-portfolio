@@ -2,7 +2,6 @@ import { profile } from '../data/content';
 import { Magnetic, RevealText, icons } from '../components/ui';
 import { toast } from '../lib/toast';
 import { store } from '../lib/store';
-import { useTeam } from '../lib/team';
 
 async function copyEmail() {
   store.fx.burst = performance.now();
@@ -15,13 +14,11 @@ async function copyEmail() {
 }
 
 export default function Contact() {
-  const team = useTeam();
   return (
     <section id="contact" className="relative flex min-h-screen flex-col px-6 pt-28 md:px-12 lg:px-20">
       <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center text-center">
         <RevealText
-          key={team}
-          text={team === 'attack' ? 'Got a system you want broken? Legally.' : 'Got a system to protect or an agent to build?'}
+          text="Got a system to protect or an agent to build?"
           className="mx-auto max-w-5xl font-display text-[clamp(2.4rem,6.4vw,6rem)] font-medium leading-[0.95] tracking-[-0.04em] text-white [text-shadow:0_2px_40px_rgba(5,6,10,0.7)]"
         />
         <p className="mt-7 max-w-md text-lg text-slate-300">Internships, projects, or a good argument about threat models and agent design. My inbox is open.</p>
