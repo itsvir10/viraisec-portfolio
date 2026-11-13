@@ -41,7 +41,7 @@ export function ProgressRail({ active }: { active: string }) {
           >
             <span
               className={`block rounded-full transition-all duration-300 ${
-                active === s.id ? 'h-2 w-2 bg-neon shadow-[0_0_10px_2px_rgba(0,229,255,0.7)]' : 'h-1 w-1 bg-white/40 group-hover:bg-white'
+                active === s.id ? 'h-2 w-2 bg-neon shadow-[0_0_10px_2px_color-mix(in_srgb,var(--color-neon)_70%,transparent)]' : 'h-1 w-1 bg-white/40 group-hover:bg-white'
               }`}
             />
             <span className="pointer-events-none absolute right-6 whitespace-nowrap rounded-full bg-black/60 px-2.5 py-1 text-xs text-slate-200 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">

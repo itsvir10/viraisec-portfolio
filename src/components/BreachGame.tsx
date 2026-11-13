@@ -225,7 +225,7 @@ export default function BreachGame({ onClose }: { onClose: () => void }) {
                     : st === 'wall'
                       ? 'border-white bg-white/90 text-ink'
                       : core
-                        ? 'border-[#a98bff] bg-ultra/40 text-white shadow-[0_0_22px_3px_rgba(124,58,237,0.7)]'
+                        ? 'border-ultra-soft bg-ultra/40 text-white shadow-[0_0_22px_3px_color-mix(in_srgb,var(--color-ultra)_70%,transparent)]'
                         : 'border-neon/60 bg-neon/10 text-neon enabled:hover:scale-125 enabled:hover:bg-neon/30'
                 }`}
               >

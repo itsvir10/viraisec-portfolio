@@ -6,7 +6,7 @@ export function FieldMark({ field }: { field: Article['field'] }) {
   const ai = field === 'ai';
   return (
     <span className={`inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 text-xs ${ai ? 'border-ultra/60 bg-ultra/15 text-[#c4b0ff]' : 'border-neon/30 bg-neon/10 text-neon'}`}>
-      <span className={`h-1.5 w-1.5 rounded-full ${ai ? 'bg-[#a98bff]' : 'bg-neon'}`} />
+      <span className={`h-1.5 w-1.5 rounded-full ${ai ? 'bg-ultra-soft' : 'bg-neon'}`} />
       {fieldLabel(field)}
     </span>
   );

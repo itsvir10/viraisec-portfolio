@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { getTeam, setTeam } from '../lib/team';
 import { about, certs, profile, skillsCore, skillsFoundations } from '../data/content';
 import { articles, fieldLabel, formatDate, getArticle, toTerminalLines } from '../lib/articles';
 
 type Line = { kind: 'in' | 'out' | 'ok' | 'err'; body: ReactNode };
 
-const BASE = ['help', 'whoami', 'about', 'skills', 'articles', 'read', 'certs', 'contact', 'socials', 'clear', 'matrix', 'sudo hire-me', 'play breach', 'gui', 'terminal'];
+const BASE = ['help', 'whoami', 'about', 'skills', 'articles', 'read', 'certs', 'contact', 'socials', 'clear', 'matrix', 'sudo hire-me', 'play breach', 'team attack', 'team defend', 'gui', 'terminal'];
 const COMPLETIONS = [...BASE.filter((c) => c !== 'read'), ...articles.map((a) => `read ${a.slug}`)];
 
 const ext = (href: string, label: string) => (
@@ -13,7 +14,7 @@ const ext = (href: string, label: string) => (
   </a>
 );
 const out = (body: ReactNode): Line => ({ kind: 'out', body });
-const fieldColor = (f: string) => (f === 'ai' ? 'text-[#a98bff]' : 'text-neon');
+const fieldColor = (f: string) => (f === 'ai' ? 'text-ultra-soft' : 'text-neon');
 
 function run(cmd: string): Line[] {
   if (cmd.startsWith('read')) {
@@ -63,6 +64,7 @@ function run(cmd: string): Line[] {
             <span className="text-neon">contact</span><span>how to reach me</span>
             <span className="text-neon">socials</span><span>LinkedIn and GitHub</span>
             <span className="text-neon">play breach</span><span>a 30-second game: contain the breach</span>
+            <span className="text-neon">team &lt;side&gt;</span><span>attack or defend: switch red team / blue team</span>
             <span className="text-neon">gui</span><span>switch to the graphical site</span>
             <span className="text-neon">terminal</span><span>switch to the full-screen terminal</span>
             <span className="text-neon">matrix</span><span>you know what this does</span>
@@ -136,6 +138,20 @@ function run(cmd: string): Line[] {
       ];
     case 'sudo':
       return [{ kind: 'err', body: 'sudo: nice try. The only sudo command here is "sudo hire-me".' }];
+    case 'team':
+    case 'team attack':
+    case 'team defend': {
+      const side = cmd.split(' ')[1];
+      if (side === 'attack' || side === 'defend') {
+        setTeam(side, false);
+        return [
+          side === 'attack'
+            ? out(<span className="text-neon">Red team engaged. Looking for a way in.</span>)
+            : out(<span className="text-neon">Blue team on watch. All systems monitored.</span>),
+        ];
+      }
+      return [out(`current team: ${getTeam()}. Try "team attack" or "team defend".`)];
+    }
     case 'ls':
       return [out('about.txt  skills/  articles/  certs/  contact.txt')];
     default:
@@ -155,11 +171,15 @@ function MatrixRain({ onEnd }: { onEnd: () => void }) {
     const drops = Array.from({ length: Math.ceil(w / size) }, () => Math.random() * -30);
     const glyphs = 'アカサタナハマヤラワ0123456789ABCDEF<>/{}';
     ctx.font = `${size}px monospace`;
+    // canvas can't read CSS variables directly, so look the current accents up once
+    const css = getComputedStyle(document.documentElement);
+    const neon = css.getPropertyValue('--color-neon').trim() || '#00E5FF';
+    const ultra = css.getPropertyValue('--color-ultra').trim() || '#7C3AED';
     const timer = window.setInterval(() => {
       ctx.fillStyle = 'rgba(5,6,10,0.16)';
       ctx.fillRect(0, 0, w, h);
       drops.forEach((y, i) => {
-        ctx.fillStyle = Math.random() > 0.94 ? '#ffffff' : i % 2 === 0 ? '#7C3AED' : '#00E5FF';
+        ctx.fillStyle = Math.random() > 0.94 ? '#ffffff' : i % 2 === 0 ? ultra : neon;
         ctx.fillText(glyphs[Math.floor(Math.random() * glyphs.length)], i * size, y * size);
         drops[i] = y * size > h && Math.random() > 0.95 ? 0 : y + 1;
       });

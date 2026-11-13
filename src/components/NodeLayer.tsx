@@ -62,7 +62,7 @@ export default function NodeLayer() {
           tip.current.style.transform = `translate3d(${h.x + 14}px, ${h.y + 12}px, 0)`;
           if (h.index !== lastTip) tip.current.textContent = detail(h.index, h.field);
           tip.current.style.opacity = '1';
-          tip.current.style.color = h.field === 0 ? '#7fefff' : '#c4b0ff';
+          tip.current.style.color = h.field === 0 ? 'var(--color-neon-soft)' : 'var(--color-ultra-soft)';
         } else {
           tip.current.style.opacity = '0';
         }
@@ -103,10 +103,10 @@ export default function NodeLayer() {
               aria-label={`${a.title}: show details`}
               onClick={() => setOpen((o) => (o === i ? -1 : i))}
               className={`absolute flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border ${
-                ai ? 'border-[#a98bff]/70' : 'border-neon/70'
+                ai ? 'border-ultra-soft/70' : 'border-neon/70'
               }`}
             >
-              <span className={`absolute inset-0 animate-ping rounded-full border ${ai ? 'border-[#a98bff]/40' : 'border-neon/40'} [animation-duration:2.4s]`} />
+              <span className={`absolute inset-0 animate-ping rounded-full border ${ai ? 'border-ultra-soft/40' : 'border-neon/40'} [animation-duration:2.4s]`} />
             </button>
             <span className={`pointer-events-none absolute left-7 top-[-0.6rem] whitespace-nowrap font-mono text-[11px] group-data-[flipx=true]:left-auto group-data-[flipx=true]:right-7 ${ai ? 'text-[#c4b0ff]' : 'text-neon'}`}>
               {a.slug}

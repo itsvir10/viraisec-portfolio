@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { sections, profile } from '../data/content';
 import { scrollToId } from '../lib/scroll';
+import TeamToggle from './TeamToggle';
 
 const links = sections.filter((s) => s.id !== 'hero');
 
@@ -60,7 +61,8 @@ export default function Navbar({ active, scrolled, onTerminalMode }: { active: s
           ))}
         </ul>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
+          <TeamToggle />
           <button
             type="button"
             onClick={onTerminalMode}

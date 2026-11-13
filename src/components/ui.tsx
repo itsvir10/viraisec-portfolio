@@ -98,7 +98,7 @@ export function TiltCard({
   const gx = useMotionValue(50);
   const gy = useMotionValue(50);
   const glareOpacity = useSpring(0, { stiffness: 120, damping: 20 });
-  const glare = useMotionTemplate`radial-gradient(460px circle at ${gx}% ${gy}%, rgba(255,255,255,0.13), rgba(0,229,255,0.05) 35%, transparent 65%)`;
+  const glare = useMotionTemplate`radial-gradient(460px circle at ${gx}% ${gy}%, rgba(255,255,255,0.13), color-mix(in srgb, var(--color-neon) 5%,transparent) 35%, transparent 65%)`;
 
   return (
     <motion.button

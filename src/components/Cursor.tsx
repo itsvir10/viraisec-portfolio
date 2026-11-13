@@ -67,7 +67,7 @@ export default function Cursor() {
           style={{
             width: size * (down ? 0.85 : 1),
             height: size * (down ? 0.85 : 1),
-            borderColor: hover ? 'rgba(0,229,255,0.9)' : 'rgba(255,255,255,0.4)',
+            borderColor: hover ? 'color-mix(in srgb, var(--color-neon) 90%,transparent)' : 'rgba(255,255,255,0.4)',
             backgroundColor: label ? 'rgba(5,6,10,0.55)' : 'transparent',
           }}
         >
@@ -76,7 +76,7 @@ export default function Cursor() {
       </div>
       <div ref={dot} className="absolute left-0 top-0">
         <div
-          className="h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon shadow-[0_0_12px_2px_rgba(0,229,255,0.8)] transition-opacity duration-200"
+          className="h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon shadow-[0_0_12px_2px_color-mix(in_srgb,var(--color-neon)_80%,transparent)] transition-opacity duration-200"
           style={{ opacity: label ? 0 : 1 }}
         />
       </div>

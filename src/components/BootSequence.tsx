@@ -117,7 +117,7 @@ export default function BootSequence({ onReveal, onDone }: { onReveal: () => voi
           {feed.map((n) => {
             const b = burst[n % burst.length];
             return (
-              <p key={n} className={`truncate ${b.field === 'security' ? 'text-neon' : 'text-[#a98bff]'}`}>
+              <p key={n} className={`truncate ${b.field === 'security' ? 'text-neon' : 'text-ultra-soft'}`}>
                 <span className="text-slate-600">{String(1000 + n * 37).slice(-4)} </span>
                 {b.field === 'security' ? '$ ' : '>>> '}
                 {b.text}
