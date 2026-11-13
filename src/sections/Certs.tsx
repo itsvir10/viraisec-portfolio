@@ -81,6 +81,20 @@ function CertModal({ cert, onClose }: { cert: Cert; onClose: () => void }) {
 
         <p className="mt-6 text-[15px] leading-relaxed text-slate-300">{cert.about}</p>
 
+        <a
+          href={cert.link}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-white transition-colors hover:border-neon/60"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.3 7.5 9.5 4.3-1.2 7.5-4.9 7.5-9.5V6L12 3Z" />
+            <path d="m8.8 12.2 2.2 2.2 4.3-4.6" />
+          </svg>
+          {cert.linkLabel}
+          <span className="sr-only"> (opens in a new tab)</span>
+        </a>
+
         <h4 className="mt-7 font-display text-lg font-medium text-white">What it covers</h4>
         <ul className="mt-3 space-y-2.5">
           {cert.outcomes.map((o) => (
