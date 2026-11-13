@@ -153,7 +153,7 @@ export default function App() {
           className="pointer-events-none fixed inset-0 z-[1]"
           style={{
             background:
-              'radial-gradient(60% 50% at 88% 0%, rgba(124,58,237,0.14), transparent 70%), radial-gradient(55% 48% at 0% 100%, rgba(0,229,255,0.1), transparent 70%), linear-gradient(to bottom, transparent 40%, rgba(11,15,26,0.55))',
+              'radial-gradient(60% 50% at 88% 0%, color-mix(in srgb, var(--color-ultra) 14%,transparent), transparent 70%), radial-gradient(55% 48% at 0% 100%, color-mix(in srgb, var(--color-neon) 10%,transparent), transparent 70%), linear-gradient(to bottom, transparent 40%, rgba(11,15,26,0.55))',
           }}
         />
         <div className="grain" aria-hidden="true" />
