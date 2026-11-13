@@ -92,6 +92,9 @@ export type Cert = {
   field: Field | 'both';
   about: string;
   outcomes: string[];
+  /** Where anyone can verify it (from the LinkedIn "Show credential" links). */
+  link: string;
+  linkLabel: string;
 };
 
 export const certs: Cert[] = [
@@ -100,6 +103,8 @@ export const certs: Cert[] = [
     issuer: 'Harvard University',
     detail: 'Introduction to Computer Science',
     field: 'both',
+    link: 'https://certificates.cs50.io/108dfec2-1c25-4fc3-9cfe-930abaf9f7d5.pdf?size=letter',
+    linkLabel: 'View certificate',
     about: "Harvard's introduction to computer science: programming from the ground up, starting in C and moving to Python, SQL and the web.",
     outcomes: [
       'Programming in C, including memory, pointers and how programs run underneath',
@@ -113,6 +118,8 @@ export const certs: Cert[] = [
     issuer: 'AWS Academy (Amazon Web Services)',
     detail: 'Graduate, May 2026',
     field: 'both',
+    link: 'https://www.credly.com/badges/a0cf24e7-3a1f-450d-a1df-668a3f92de12/public_url',
+    linkLabel: 'Verify on Credly',
     about: 'An introduction to cloud computing on AWS: what the cloud is, the core services, and how they are secured and paid for.',
     outcomes: [
       'Core services: compute (EC2), storage (S3), networking (VPC) and databases',
@@ -124,8 +131,10 @@ export const certs: Cert[] = [
   {
     title: 'CompTIA Security+',
     issuer: 'CompTIA',
-    detail: 'SY0-701',
+    detail: 'SY0-701, Aug 2026',
     field: 'security',
+    link: 'https://www.credly.com/badges/45c0d61f-1654-4ab1-bcab-a2c14b22f18d/public_url',
+    linkLabel: 'Verify on Credly',
     about: 'An industry-recognised certification covering the core knowledge for an entry-level security role.',
     outcomes: [
       'Core security concepts, including cryptography and identity and access management',
