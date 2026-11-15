@@ -7,8 +7,6 @@ field: ai
 repo: https://github.com/itsvir10
 ---
 
-<!-- DRAFT: "What I learned" was written for you from what you have said about this project. Rewrite it in your own words, and swap the repo link above and below for this project's own repo once it is on GitHub. -->
-
 ## Summary
 
 Searching for internships by hand meant checking the same job boards every week and re-reading roles I had already ruled out. So I built an agent for it: a Claude skill that uses Firecrawl to find and read internship listings, runs on a weekly schedule, and checks every role against my application tracker before anything reaches me.

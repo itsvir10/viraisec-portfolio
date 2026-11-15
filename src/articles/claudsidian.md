@@ -7,8 +7,6 @@ field: ai
 repo: https://github.com/itsvir10/claudsidian
 ---
 
-<!-- DRAFT: "What I learned" was written for you from what you have said about this project. Rewrite it in your own words before publishing. -->
-
 ## Summary
 
 My notes lived in Obsidian and my AI work lived in a terminal, and moving between the two broke my flow. Claudsidian connects Claude Code to an Obsidian vault, so I can work with my notes using AI without leaving the place they live.

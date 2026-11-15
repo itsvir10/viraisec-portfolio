@@ -7,8 +7,6 @@ field: security
 repo: https://github.com/itsvir10/security-plus-study-guide
 ---
 
-<!-- DRAFT: "What I learned" was written for you from what the repo says about how you studied. Rewrite it in your own words before publishing. -->
-
 ## Summary
 
 I wanted Security+ done properly but fast, so I gave it about a week of focused, daily study. Instead of watching videos front to back, I went practice-questions first: take a quiz, get things wrong, figure out why, write it down. I used ExamCompass for topic-by-topic quizzes, Dion Training's practice exams for the real-exam feel, and CyberCraft's free YouTube course to fill gaps.

@@ -7,8 +7,6 @@ field: security
 repo: https://github.com/itsvir10/wazuh-siem-lab
 ---
 
-<!-- DRAFT: "What I learned" was written for you from what you have said about this project. Rewrite it in your own words before publishing. -->
-
 ## Summary
 
 I built a small security operations setup at home: a Wazuh manager on Kali Linux watching a Windows 11 endpoint, both running in VirtualBox. File Integrity Monitoring on the Windows machine raises an alert whenever a watched file changes. Partway through, the agent refused to connect because its version did not match the manager's, and I traced the cause through the logs and fixed it.
