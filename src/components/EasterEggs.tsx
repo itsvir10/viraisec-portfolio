@@ -35,7 +35,33 @@ function consoleHello() {
 }
 
 // ---------- visitor scan ----------
-function scanLines(): string[] {
+/**
+ * Approximate location from the visitor's IP, via /api/where (a Cloudflare
+ * Pages Function in functions/api). Falls back to the device time zone when
+ * that isn't available, e.g. running locally or if the lookup is slow.
+ */
+async function ipPlace(): Promise<string | undefined> {
+  const ctrl = new AbortController();
+  const timer = window.setTimeout(() => ctrl.abort(), 1500);
+  try {
+    const res = await fetch('/api/where', { signal: ctrl.signal, cache: 'no-store' });
+    if (!res.ok) return undefined;
+    const { city, country } = (await res.json()) as { city?: string | null; country?: string | null };
+    let countryName = country ?? '';
+    try {
+      if (country) countryName = new Intl.DisplayNames(['en'], { type: 'region' }).of(country) ?? country;
+    } catch {
+      /* keep the country code */
+    }
+    return [city, countryName].filter(Boolean).join(', ') || undefined;
+  } catch {
+    return undefined;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function scanLines(ipPlace?: string): string[] {
   const ua = navigator.userAgent;
   const browser = /Edg\//.test(ua)
     ? 'Edge'
@@ -48,12 +74,15 @@ function scanLines(): string[] {
           : /Safari\//.test(ua)
             ? 'Safari'
             : 'unknown browser';
-  let place = '';
-  try {
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone ?? '';
-    place = tz.split('/').pop()?.replace(/_/g, ' ') ?? '';
-  } catch {
-    /* no timezone: skip it */
+  let place = ipPlace ?? '';
+  if (!place) {
+    // fallback: the device time zone, e.g. Australia/Perth -> Perth
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone ?? '';
+      place = tz.split('/').pop()?.replace(/_/g, ' ') ?? '';
+    } catch {
+      /* no timezone: skip it */
+    }
   }
   const dark = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark mode' : 'light mode';
   return ['scanning visitor...', [place, browser, dark].filter(Boolean).join(' · '), 'threat level: friendly ✓'];
@@ -80,12 +109,23 @@ function VisitorScan({ start }: { start: boolean }) {
     } catch {
       /* fine: it just shows again next visit */
     }
-    const all = scanLines();
     const timers: number[] = [];
+    let cancelled = false;
+    // start the lookup straight away; the badge only needs it about 3s later
+    const place = ipPlace();
     timers.push(window.setTimeout(() => setShow(true), 1800));
-    all.forEach((_, i) => timers.push(window.setTimeout(() => setLines(all.slice(0, i + 1)), 2000 + i * 900)));
-    timers.push(window.setTimeout(() => setShow(false), 2000 + all.length * 900 + 3800));
-    return () => timers.forEach(clearTimeout);
+    timers.push(window.setTimeout(() => setLines(['scanning visitor...']), 2000));
+    place.then((p) => {
+      if (cancelled) return;
+      const all = scanLines(p);
+      const wait = 2900;
+      all.slice(1).forEach((_, i) => timers.push(window.setTimeout(() => setLines(all.slice(0, i + 2)), wait + i * 900)));
+      timers.push(window.setTimeout(() => setShow(false), wait + all.length * 900 + 3800));
+    });
+    return () => {
+      cancelled = true;
+      timers.forEach(clearTimeout);
+    };
   }, [start]);
 
   return (
